@@ -1,0 +1,25 @@
+﻿@model CuBuy.ViewModels.MakeABidModel
+@using CuBuy.Infraestructure
+
+<div class="card-body">
+    <h4 class="card-title">
+        @Model.Auction.Product
+        <span class="badge badge-info float-right mt-1">Current Price: @Model.Auction.FinalPrice</span>
+    </h4>
+    <hr>
+    <form asp-controller="Auction" asp-action="MakeABid" asp-route-id=@Model.Auction.Id>
+        <input asp-for="@Model.ReturnUrl" hidden="hidden" value="@ViewContext.HttpContext.Request.PathAndQuery()">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+        </div>
+        <div class="col form-group">
+            <label class=" form-control-label">How much?</label>
+            <input id="price" asp-for="@Model.Price" type="number" min="@Model.Auction.FinalPrice" value="@Model.Auction.FinalPrice" class="form-control col-sm-3">
+            <span asp-validation-for="@Model.Price" class="field-validation-error text-danger"></span>
+        </div>
+        <div class="col form-group">
+            <button type="submit" data-toggle="modal" class="btn btn-success float-left mt-1">
+                <i class="fa fa-check"></i>&nbsp; Bid
+            </button>
+        </div>
+    </form>
+</div>

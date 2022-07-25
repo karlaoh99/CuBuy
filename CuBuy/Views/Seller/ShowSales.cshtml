@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CuBuy.Models.Purchase>
+
+<div class="animsition">
+    <div class="page-wrapper">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="user-data m-b-30">
+                        <h3 class="title-3 m-b-30">My Sales</h3>
+                        @*<div class="table-data__tool" style="margin-left: 10px; margin-right: 10px;">
+                            <div class="table-data__tool-right">
+                                <div class="rs-select2--light rs-select2--md">
+                                    <select class="js-select2" name="property">
+                                        <option selected="selected">All Properties</option>
+                                        <option value="">Option 1</option>
+                                        <option value="">Option 2</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <button class="au-btn-filter">
+                                    <i class="zmdi zmdi-filter-list"></i>Filtrar
+                                </button>
+                            </div>
+                        </div>*@
+                        <div class="table-responsive table-data">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>product</td>
+                                        <td>buyer</td>
+                                        <td>date</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Count() != 0)
+                                    {
+                                        foreach (var purchase in Model)
+                                        {
+                                            <tr class="table-data__info">
+                                                <td><h6>@purchase.Ad.Product</h6></td>
+                                                <td><h6>@purchase.Buyer.UserName</h6></td>
+                                                <td><h6>@purchase.DateTime</h6></td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr class="table-data__info">
+                                            <td><h6>No sells</h6></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

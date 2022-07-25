@@ -1,0 +1,98 @@
+@model IEnumerable<CuBuy.Models.Ad>
+@using CuBuy.Infraestructure
+
+<div class="animsition">
+    <div class="page-wrapper">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="user-data m-b-30">
+                        <h3 class="title-3 m-b-30">My Ads</h3>
+                        <div class="table-data__tool" style="margin-left: 10px; margin-right: 10px;">
+                            <div class="table-data__tool-left">
+                                <form asp-action="ShowAds" method="post">
+                                    <div class="rs-select2--light rs-select2--md">
+                                        <select class="js-select2" name="category">
+                                            <option value=@null selected="selected">All Categories</option>
+                                            @foreach (var op in SelectOptions.ProductCategories)
+                                            {
+                                                <option value=@op>@op</option>
+                                            }
+                                        </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
+                                    <button type="submit" class="au-btn-filter">
+                                        <i class="zmdi zmdi-filter-list"></i>Filter
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="table-data__tool-right">
+                                <form asp-action="InsertAd" method="get">
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-plus"></i>New Ad
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="table-responsive table-data">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>product</td>
+                                        <td>category</td>
+                                        <td>price</td>
+                                        <td>date</td>
+                                        <td>units available</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Count() != 0)
+                                    {
+                                        @foreach (var ad in Model)
+                                        {
+                                            <tr class="table-data__info">
+                                                <td><h6>@ad.Product</h6></td>
+                                                <td><h6>@ad.Category</h6></td>
+                                                <td><h6>@ad.Price</h6></td>
+                                                <td><h6>@ad.DateTime.Day-@ad.DateTime.Month-@ad.DateTime.Year</h6></td>
+                                                <td><h6>@ad.UnitsAvailable</h6></td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <div class="table-data-feature">
+                                                            <form asp-action="EditAd" asp-route-id=@ad.Id method="GET">
+                                                                <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                    <i class="zmdi zmdi-edit"></i>
+                                                                </button>
+                                                            </form>
+                                                            <form asp-action="DeleteAd" asp-route-id="@ad.Id">
+                                                                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" style="margin-left: 4px;">
+                                                                    <i class="zmdi zmdi-delete"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr class="table-data__info">
+                                            <td><h6>No ads</h6></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,208 @@
+﻿@{
+    var userIsAuthenticated = Context.User.Identity.IsAuthenticated;
+    var userName = Context.User.Identity.Name;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>CuBuy</title>
+
+    <!-- Fontfaces CSS-->
+    <link href="~/css/font-face.css" rel="stylesheet" media="all">
+    <link href="~/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="~/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="~/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="~/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="~/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="~/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="~/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="~/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="~/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="~/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/css/theme.css" rel="stylesheet" media="all">
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER DESKTOP-->
+        <header class="header-desktop3 d-none d-lg-block">
+            <div class="section__content section__content--p35">
+                <div class="header3-wrap">
+                    <div class="header__logo">
+                        <img src="~/images/icon/logo-white.png" alt="CoolAdmin" width="330" style="margin-left: -60px;">
+                    </div>
+                    <div class="header__navbar">
+                        <ul class="list-unstyled" style="margin-top: 7.5px;">
+                            <li>
+                                <a asp-controller="Home" asp-action="Index">
+                                    <i class="fas fa-home"></i>
+                                    <span class="bot-line"></span>Home
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Ad" asp-action="Index" method="get">
+                                    <i class="fas fa-archive"></i>
+                                    <span class="bot-line"></span>Ads
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Auction" asp-action="Index" method="get">
+                                    <i class="fas fa-archive"></i>
+                                    <span class="bot-line"></span>Auctions
+                                </a>
+                            </li>
+                            @if (userIsAuthenticated)
+                            {
+                                if (Context.User.IsInRole("Admin"))
+                                {
+                                    <li>
+                                        <a asp-controller="Admin" asp-action="Users">
+                                            <i class="fas fa-users"></i>
+                                            <span class="bot-line"></span>Admin Users
+                                        </a>
+                                    </li>
+                                }
+                                if (Context.User.IsInRole("Seller"))
+                                {
+                                    <li class="has-sub">
+                                        <a href="">
+                                            <i class="fas fa-bar-chart-o"></i>
+                                            <span class="bot-line"></span>Sells
+                                        </a>
+                                        <ul class="header3-sub-list list-unstyled">
+                                            <li>
+                                                <a asp-controller="Seller" asp-action="ShowAds">My Ads</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Auction" asp-action="ShowUserAuctions">My Auctions</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Seller" asp-action="ShowSales">My Sales</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                                if (Context.User.IsInRole("Buyer"))
+                                {
+                                    <li class="has-sub">
+                                        <a href="">
+                                            <i class="fas fa-bar-chart-o"></i>
+                                            <span class="bot-line"></span>Buyer
+                                        </a>
+                                        <ul class="header3-sub-list list-unstyled">
+                                            <li>
+                                                <a asp-controller="Buyer" asp-action="ShowPurchases">Purchases</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Cart" asp-action="Index">My Cart</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-controller="Account" asp-action="Login">
+                                        <i class="fas fa-key"></i>
+                                        <span class="bot-line"></span>Login
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    @if (Context.User.Identity.IsAuthenticated)
+                    {
+                        <div class="header__tool">
+                            <div class="header-button-item has-noti js-item-menu">
+                                <i class="zmdi zmdi-notifications"></i>
+                                <div class="account-dropdown js-dropdown">
+                                    <div not-user="@Context.User" list-size="6"></div>
+                                </div>
+                            </div>
+                            <div class="account-wrap">
+                                <div class="account-item account-item--style2 clearfix js-item-menu">
+                                    <div class="content">
+                                        <a class="js-acc-btn" href="~/#">@userName</a>
+                                    </div>
+                                    <div class="account-dropdown js-dropdown">
+                                        <div class="account-dropdown__body">
+                                            <div class="account-dropdown__item">
+                                                <a href="~/#">
+                                                    <i class="zmdi zmdi-account"></i>Account
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
+                                                <a asp-controller="Account" asp-action="Logout">
+                                                    <i class="zmdi zmdi-power"></i>Logout
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </header>
+        <!-- END HEADER DESKTOP-->
+        <!-- PAGE CONTENT-->
+        <div class="page-content--bgf7">
+            @RenderBody()
+        </div>
+
+    </div>
+        
+    <!-- Jquery JS-->
+    <script src="~/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="~/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="~/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="~/vendor/slick/slick.min.js">
+    </script>
+    <script src="~/vendor/wow/wow.min.js"></script>
+    <script src="~/vendor/animsition/animsition.min.js"></script>
+    <script src="~/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="~/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="~/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="~/vendor/select2/select2.min.js">
+    </script>
+
+    <!-- Main JS-->
+    <script src="~/js/main.js"></script>
+
+    <!-- Validation JS -->
+    <script src="~/validation/jquery.min.js"></script>
+    <script src="~/validation/jquery.validate.min.js"></script>
+    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+
+</html>
+<!-- end document-->

@@ -1,0 +1,103 @@
+@model CuBuy.ViewModels.CartViewModel
+
+<div class="animsition">
+    <div class="page-wrapper">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="user-data m-b-30">
+                        <div class="table-data__tool">
+                            <div class="table-data__tool-left">
+                                <h3 class="title-3 m-b-30">
+                                    <i class="fas fa-shopping-cart"></i>my cart: @Model.Cart.ComputeTotalValue() $
+                                </h3>
+                            </div>
+                            <div class="table-data__tool-right">
+                                <div class="row form-group" style="margin-right: 10px;">
+                                    <form asp-controller="Buyer" asp-action="BuyCart" method="post">
+                                        <div class="form-group" style="width: 300px">
+                                            <input asp-for="@Model.CreditCard" type="text" minlength=16 maxlength="16" placeholder="Enter your credit card..." class="form-control">
+                                            <span asp-validation-for="@Model.CreditCard" class="text-danger"></span>
+                                        </div>
+                                        <div style="align-content: space-between;">
+                                            <button class="btn btn-success" type="submit">Buy Cart</button>
+                                            <a asp-action="Clear" class="btn btn-warning">Clear</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive table-data">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>product</td>
+                                        <td>category</td>
+                                        <td>price</td>
+                                        <td>units</td>
+                                        <td>total</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Cart.Lines.Count() != 0)
+                                    {
+                                        @foreach (var item in Model.Cart.Lines)
+                                        {
+                                            var modalId = $"#{item.Ad.Id}";
+                                            <tr class="table-data__info">
+                                                <td><h6>@item.Ad.Product</h6></td>
+                                                <td><h6>@item.Ad.Category</h6></td>
+                                                <td><h6>@item.Ad.Price $</h6></td>
+                                                <td><h6>@item.Units</h6></td>
+                                                <td><h6>@(item.Units * item.Ad.Price) $</h6></td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <div class="table-data-feature">
+                                                            <button class="item" data-target="@modalId" data-toggle="modal" data-placement="top" title="Edit">
+                                                                <i class="zmdi zmdi-edit"></i>
+                                                            </button>
+                                                            <form asp-action="RemoveFromCart" asp-route-id="@item.Ad.Id">
+                                                                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                                    <i class="zmdi zmdi-delete"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr class="table-data__info">
+                                            <td><h6>No products in cart</h6></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="user-data__footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var line in Model.Cart.Lines)
+    {
+    <div class="modal fade" id=@line.Ad.Id role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                   @await Component.InvokeAsync("EditLineUnitsForm", line)
+            </div>
+        </div>
+    </div>
+    }
+</div>

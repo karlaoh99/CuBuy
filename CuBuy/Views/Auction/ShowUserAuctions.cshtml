@@ -1,0 +1,109 @@
+﻿@model IEnumerable<CuBuy.Models.Auction>
+@using CuBuy.Infraestructure
+
+<div class="animsition">
+    <div class="page-wrapper">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="user-data m-b-30">
+                        <h3 class="title-3 m-b-30">My Auctions</h3>
+                        <div class="table-data__tool" style="margin-left: 10px; margin-right: 10px;">
+                            <div class="table-data__tool-left">
+                                <form asp-action="ShowUserAuctions" method="post">
+                                    <div class="rs-select2--light rs-select2--md">
+                                        <select class="js-select2" name="category">
+                                            <option value=@null selected="selected">All Categories</option>
+                                            @foreach (var op in SelectOptions.ProductCategories)
+                                            {
+                                                <option value=@op>@op</option>
+                                            }
+                                        </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
+                                    <button type="submit" class="au-btn-filter">
+                                        <i class="zmdi zmdi-filter-list"></i>Filter
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="table-data__tool-right">
+                                <form asp-action="InsertAuction" method="get">
+                                    <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-plus"></i>New Auction
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="table-responsive table-data">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>product</td>
+                                        <td>category</td>
+                                        <td>start price</td>
+                                        <td>current price</td>
+                                        <td>start time</td>
+                                        <td>final time</td>
+                                        <td>current winner</td>
+                                        <td>auction finished</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Count() != 0)
+                                    {
+                                        @foreach (var auction in Model)
+                                        {
+                                            <tr class="table-data__info">
+                                                <td><h6>@auction.Product</h6></td>
+                                                <td><h6>@auction.Category</h6></td>
+                                                <td><h6>@auction.StartPrice</h6></td>
+                                                <td><h6>@auction.FinalPrice</h6></td>
+                                                <td><h6>@auction.StartTimeAuction.Day-@auction.StartTimeAuction.Month-@auction.StartTimeAuction.Year</h6></td>
+                                                <td><h6>@auction.FinalTimeAuction.Day-@auction.FinalTimeAuction.Month-@auction.FinalTimeAuction.Year</h6></td>
+                                                @if (auction.Buyer != null)
+                                                {
+                                                    <td><h6>@auction.Buyer.UserName</h6></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><h6>None</h6></td>
+                                                }
+                                                <td><h6>@auction.ProductSold</h6></td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <div class="table-data-feature">
+                                                            <form asp-action="DeleteAuction" asp-route-id="@auction.Id">
+                                                                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete" style="margin-left: 4px;">
+                                                                    <i class="zmdi zmdi-delete"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr class="table-data__info">
+                                            <td><h6>No auctions</h6></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+@model EditUserModel;
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>User Information</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <div class="form-group">
+                                <label class=" form-control-label">Name</label>
+                                <input type="text" asp-for="Name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class=" form-control-label">Email</label>
+                                <input type="email" asp-for="Email" class="form-control">
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-9">
+                                    <label class=" form-control-label">Roles</label>
+                                </div>
+                                <div class="col col-md-3">
+                                    <div class="form-check">
+                                        <div class="checkbox">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" asp-for="Admin" value=@true class="form-check-input"> Admin
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" asp-for="Seller" value=@true class="form-check-input"> Seller
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label class="form-check-label ">
+                                                <input type="checkbox" asp-for="Buyer" value=@true class="form-check-input"> Buyer
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+@model CuBuy.ViewModels.BuyProductModel
+@using CuBuy.Infraestructure
+
+<div class="card-body">
+    <h4 class="card-title">Order @Model.Ad.Product
+        <span class="badge badge-info float-right mt-1">Price: @Model.Ad.Price</span>
+    </h4>
+    <span id="total">Total: @Model.Ad.Price $</span>
+    <hr>
+    <input id="price" asp-for="@Model.Ad.Price" hidden="hidden">
+    <form asp-controller="Buyer" asp-action="Buy" asp-route-id=@Model.Ad.Id>
+        <input asp-for="@Model.ReturnUrl" hidden="hidden" value="@ViewContext.HttpContext.Request.PathAndQuery()">
+        <div class="col form-group">
+            <label class=" form-control-label">How many units?</label>
+            <input id="units" asp-for="@Model.Units" type="number" max=@Model.Ad.UnitsAvailable  min=1 value="1" class="form-control col-sm-3">
+        </div>
+        <div class="col form-group">
+            <label class=" form-control-label">Enter your credit card</label>
+            <input asp-for="@Model.CreditCard" type="text" minlength=16 maxlength="16" placeholder="Enter your credit card..." class="form-control">
+            <span asp-validation-for="@Model.CreditCard" class="field-validation-error text-danger"></span>
+        </div>
+        <div class="col form-group">
+        <button type="submit" data-toggle="modal" type="button" class="btn btn-success float-left mt-1">
+            <i class="fa fa-check"></i>&nbsp; Confirm</button>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('units').addEventListener('change', calculateTotal, true);
+
+        function calculateTotal()
+        {
+            var units = document.getElementById("units").value;
+            var price = document.getElementById("price").value;
+            var result = units * price;
+            document.getElementById("total").innerHTML = "Total: " + result.toString() + " $"; 
+        }
+    </script>
+</div>

@@ -1,0 +1,73 @@
+﻿@model CuBuy.Models.Ad
+@using CuBuy.Infraestructure
+
+<div class="animsition">
+    <div class="page-wrapper">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-3">
+                        </div>
+                        <div class="col-lg-6">
+                            <form asp-controller="Seller" asp-action="EditAd" method="post">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Edit Ad</h3>
+                                        <hr>
+                                            <div class="form-group">
+                                                <label class=" form-control-label">Product</label>
+                                                <input asp-for="Product" type="text" placeholder="" class="form-control">
+                                                <span asp-validation-for="Product" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label  class=" form-control-label">Description</label>
+                                                <textarea asp-for="Description" rows="9" placeholder="Content..." class="form-control"></textarea>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col col-md-3">
+                                                <div class="form-group">
+                                                    <label  class="control-label mb-1">Price</label>
+                                                    <input asp-for="Price" type="text" class="form-control" placeholder="0.00">
+                                                </div>
+                                            </div>
+                                            <div class="col col-md-3">
+                                                <div class="form-group">
+                                                    <label  class="control-label mb-1">Units</label>
+                                                    <input asp-for="UnitsAvailable" type="number" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <span asp-validation-for="Price" class="text-danger"></span>
+                                            <span asp-validation-for="UnitsAvailable" class="text-danger"></span>
+                                            <div class="col col-md-5">
+                                                <div class="form-group">
+                                                    <label  class=" form-control-label">Type</label>
+                                                    <select asp-for="Category"  class="form-control">
+                                                        <option value=@null>Please Select</option>
+                                                        @foreach (var op in SelectOptions.ProductCategories)
+                                                        {
+                                                            <option value=@op>@op</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <span asp-validation-for="Category" class="text-danger"></span>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </button>
+                                        <a asp-action="ShowAds" method="get" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-ban"></i> Cancel
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

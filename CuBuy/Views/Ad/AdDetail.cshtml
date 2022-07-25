@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body class="animsition">
+
+    @model  CuBuy.Models.Ad
+
+    <div class="page-wrapper">
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    @* <img class="card-img-top" src="~/images/bg-title-01.jpg" alt="Card image cap"> *@
+                                    <div class="card-body">
+                                        <h3 class="card-title">@Model.Product
+                                            <span class="badge badge-success float-right mt-1">@Model.Category</span>
+                                        </h3>
+                                        <div class="location text-sm-center">
+                                                 <i class="fa fa-calendar"></i> @Model.DateTime.ToLongDateString()</div>
+                                        Price: @Model.Price $
+                                        <p class="card-text">@Model.Description</p>
+                                        <hr>
+                                        <div class="card-text text-sm-center">
+                                            <button type="button" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-star"></i>&nbsp; Primary</button>
+                                             <button type="button" class="btn btn-success btn-sm">
+                                            <i class="fa fa-magic"></i>&nbsp; Success</button>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    @* <img class="card-img-top" src="~/images/bg-title-01.jpg" alt="Card image cap"> *@
+                                    <div class="card-body">
+                                        <h3 class="card-title">@Model.Product
+                                            <span class="badge badge-success float-right mt-1">@Model.Category</span>
+                                        </h3>
+                                        <div class="location text-sm-center">
+                                                 <i class="fa fa-calendar"></i> @Model.DateTime.ToLongDateString()</div>
+                                        Price: @Model.Price $
+                                        <p class="card-text">@Model.Description</p>
+                                        <hr>
+                                        <div class="card-text text-sm-center">
+                                            <button type="button" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-star"></i>&nbsp; Primary</button>
+                                             <button type="button" class="btn btn-success btn-sm">
+                                            <i class="fa fa-magic"></i>&nbsp; Success</button>
+                                        </div>
+                                    </div>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+</body>
+
+</html>
+<!-- end document-->

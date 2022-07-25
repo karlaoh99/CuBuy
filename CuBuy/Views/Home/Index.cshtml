@@ -1,0 +1,157 @@
+﻿@{
+    var userIsAuthenticated = Context.User.Identity.IsAuthenticated;
+    var userName = Context.User.Identity.Name;
+}
+@model CuBuy.ViewModels.UpgradeAccountModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cubuy Shop - Home</title>
+    <link rel="stylesheet" href="~/home/vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="~/home/vendors/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="~/home/vendors/nice-select/nice-select.css">
+    <link rel="stylesheet" href="~/home/vendors/owl-carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/home/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/home/css/style.css">
+</head>
+
+<body>
+    <main class="site-main">
+        <section class="hero-banner">
+            <div class="container">
+                <div class="row no-gutters align-items-center pt-60px">
+                    <div class="col-5 d-none d-sm-block">
+                        <div class="hero-banner__img">
+                            <img class="img-fluid" src="~/images/hero-banner.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
+                        <div class="hero-banner__content">
+                            <h4>Shop is fun</h4>
+                            <h1>Browse and Find Any Product You Want</h1>
+                            <a asp-controller="Ad" asp-action="Index" class="button button-hero">Browse Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @if (!userIsAuthenticated || (userIsAuthenticated && Context.User.IsInRole("Buyer")))
+        {
+            <section class="subscribe-position">
+                <div class="container">
+                    <div class="subscribe text-center">
+                        @if (!userIsAuthenticated)
+                        {
+                            <h3 class="subscribe__title">Get Update From Anywhere</h3>
+                            <p>Subscribe! You will receive notifications about products of your interest and next auctions</p>
+                            <div id="mc_embed_signup">
+                                <a asp-controller="Account" asp-action="SignUp" class="button button-subscribe mr-auto mb-1">Subscribe Now</a>
+                            </div>
+                        }
+                        @if (userIsAuthenticated)
+                        {
+                            @if (Context.User.IsInRole("Seller"))
+                            {
+                                <h3 class="subscribe__title">Add a new advertisement</h3>
+                                <p>Click here and insert a new ad so everyone can purchase your products!</p>
+                                <div id="mc_embed_signup">
+                                    <a asp-controller="Seller" asp-action="InsertAd" class="button button-subscribe mr-auto mb-1">New ad</a>
+                                </div>
+                            }
+                            else if (Context.User.IsInRole("Buyer"))
+                            {
+                                <h3 class="subscribe__title">Sell With Us</h3>
+                                <p>You can upgrade here your account to sell your own products with us</p>
+                                <div id="mc_embed_signup">
+                                    <button class="button button-subscribe mr-auto mb-1" data-target="#upgrade-account" data-toggle="modal" type="button">Upgrade</button>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </section>
+        }
+    </main>
+
+    <footer class="footer">
+        <div class="footer-area">
+            <div class="container">
+                <div class="row section_gap">
+                    <div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-footer-widget tp_widgets">
+                            <h4 class="footer_title">Contact Us</h4>
+                            <div class="ml-40">
+                                <p class="sm-head">
+                                    <span class="fa fa-location-arrow"></span>
+                                    Head Office
+                                </p>
+                                <p>123, Main Street, Your City</p>
+
+                                <p class="sm-head">
+                                    <span class="fa fa-phone"></span>
+                                    Phone Number
+                                </p>
+                                <p>
+                                    +123 456 7890 <br>
+                                    +123 456 7890
+                                </p>
+
+                                <p class="sm-head">
+                                    <span class="fa fa-envelope"></span>
+                                    Email
+                                </p>
+                                <p>
+                                    free@infoexample.com <br>
+                                    www.infoexample.com
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="upgrade-account" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="card-body">
+                    <h4 class="card-title">Upgrade your account</h4>
+                    <hr>
+                    <form asp-controller="Account" asp-action="UpgradeAccount" method="post">
+                        <div class="col form-group">
+                            <label class=" form-control-label">Enter your credit card</label>
+                            <input asp-for="CreditCard" type="text" minlength=16 maxlength="16" placeholder="Enter your credit card..." class="form-control">
+                            <span asp-validation-for="CreditCard" class="text-danger" />
+                        </div>
+                        <div class="col form-group">
+                            <label class=" form-control-label">Enter your password</label>
+                            <input asp-for="Password" type="text" placeholder="Enter your password..." class="form-control">
+                            <span asp-validation-for="CreditCard" class="text-danger" />
+                        </div>
+                        <div class="col form-group">
+                            <button type="submit" data-toggle="modal" class="btn btn-success float-left mt-1">
+                                <i class="fa fa-check"></i>&nbsp; Confirm
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/home/vendors/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/home/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="~/home/vendors/skrollr.min.js"></script>
+    <script src="~/home/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/home/vendors/nice-select/jquery.nice-select.min.js"></script>
+    <script src="~/home/vendors/jquery.ajaxchimp.min.js"></script>
+    <script src="~/home/vendors/mail-script.js"></script>
+    <script src="~/home/js/main1.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+﻿@model CuBuy.ViewModels.ListAuctionsModel
+@using CuBuy.Infraestructure
+
+<div class="animsition">
+    <div class="page-wrapper">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <strong><h1 class="pb-2 display-5">Auctions</h1></strong>
+                            <form asp-action="Index">
+                                <div class="table-data__tool">
+                                    <div class="table-data__tool-left">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <input type="number" min="0.1" class="au-input au-input--full" asp-for=@Model.MinPrice placeholder="min price">
+                                                <span asp-validation-for="@Model.MinPrice" class="text-danger"></span>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input type="number" min="0.1" class="au-input au-input--full" asp-for=@Model.MaxPrice placeholder="max price">
+                                                <span asp-validation-for="@Model.MaxPrice" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-data__tool-right">
+                                        <div class="rs-select2--light rs-select2--md">
+                                            <select class="js-select2" asp-for=@Model.Category>
+                                                <option value=@null selected="selected">All Categories</option>
+                                                @foreach (var op in SelectOptions.ProductCategories)
+                                                {
+                                                    <option value=@op>@op</option>
+                                                }
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                        <button type="submit" class="au-btn-filter">
+                                            <i class="zmdi zmdi-filter-list"></i>filters
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (var auction in Model.Auctions)
+                        {
+                            <div class="col-md-6">
+                                <div class="card">
+                                    @* <img class="card-img-top" src="~/images/bg-title-01.jpg" alt="Card image cap"> *@
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            @auction.Product
+                                            <span class="badge badge-info float-right mt-1">@auction.Category</span>
+                                        </h3>
+                                        <div class="location text-sm-center">
+                                            <i class="fa fa-calendar"></i> Start Time @auction.StartTimeAuction.ToLongDateString()
+                                        </div>
+                                        <div class="location text-sm-center">
+                                            <i class="fa fa-calendar"></i> End Time   @auction.FinalTimeAuction.ToLongDateString()
+                                        </div>
+                                        <p class="card-text">Start Price:   @auction.StartPrice $</p>
+                                        <p class="card-text">Current Price: @auction.FinalPrice $</p>
+                                        <p class="card-text">@auction.Description</p>
+
+                                        @if (Context.User.IsInRole("Buyer"))
+                                        {
+                                            var modalId = $"#{auction.Id}";
+                                            <hr>
+                                            <div class="card-text text-sm-center">
+                                                <button data-target=@modalId data-toggle="modal" type="button" class="btn btn-success btn-sm">
+                                                    <i class="fa fa-credit-card"></i>&nbsp; Make a Bid
+                                                </button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="user-data__footer">
+                        <div page-model=@Model page-action="Index" page-classes-enabled="true"
+                                page-class="btn" page-class-normal="btn-outline-primary" page-class-selected="btn-primary"
+                                class="card-body btn-group pull-center m-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach (var auction in Model.Auctions)
+{
+    <div class="modal fade" id=@auction.Id role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                @await Component.InvokeAsync("MakeABid", auction.Id)
+            </div>
+        </div>
+    </div>
+}

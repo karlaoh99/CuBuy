@@ -1,0 +1,34 @@
+@model CuBuy.Models.Ad
+@using CuBuy.Infraestructure
+
+<div class="card-body">
+    <h4 class="card-title">Add to cart @Model.Product
+        <span class="badge badge-info float-right mt-1">Price: @Model.Price</span>
+    </h4>
+    <span id="total2">Total: @Model.Price $</span>
+    <hr>
+    <input id="price2" asp-for="@Model.Price" hidden="hidden">
+    <input name="returnUrl" type="hidden" value="@ViewContext.HttpContext.Request.PathAndQuery()">
+    <form asp-controller="Cart" asp-action="AddToCart" asp-route-id=@Model.Id>
+        <div class="col form-group">
+            <label class=" form-control-label">How many units?</label>
+            <input name="units" id="units2" type="number" max=@Model.UnitsAvailable  min=1 value="1" class="form-control col-sm-3">
+        </div>
+        <div class="col form-group">
+        <button type="submit" data-toggle="modal" type="button" class="btn btn-success float-left mt-1">
+            <i class="fa fa-check"></i>&nbsp; Confirm</button>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('units2').addEventListener('change', calculateTotal, true);
+
+        function calculateTotal()
+        {
+            var units = document.getElementById("units2").value;
+            var price = document.getElementById("price2").value;
+            var result = units * price;
+            document.getElementById("total2").innerHTML = "Total: " + result.toString() + " $"; 
+        }
+    </script>
+</div>
